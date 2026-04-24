@@ -43,7 +43,17 @@ export default async function CuadrosPage() {
   )
 }
 
-function BracketSection({ title, semis, third, final }: { title: string, semis: any[], third: any[], final: any[] }) {
+type MatchData = {
+  homeTeam?: { name?: string } | null;
+  awayTeam?: { name?: string } | null;
+  placeholderHome?: string | null;
+  placeholderAway?: string | null;
+  homeScore?: number | string | null;
+  awayScore?: number | string | null;
+  [key: string]: unknown;
+};
+
+function BracketSection({ title, semis, third, final }: { title: string, semis: MatchData[], third: MatchData[], final: MatchData[] }) {
   return (
     <div className="bg-surface border border-border rounded-2xl p-4 overflow-hidden">
       <h2 className="text-lg font-bold text-primary mb-6 flex items-center border-b border-border pb-2">
@@ -85,7 +95,7 @@ function BracketSection({ title, semis, third, final }: { title: string, semis: 
   )
 }
 
-function BracketMatch({ match, isFinal = false }: { match: any, isFinal?: boolean }) {
+function BracketMatch({ match, isFinal = false }: { match: MatchData, isFinal?: boolean }) {
   const homeName = match?.homeTeam?.name || match?.placeholderHome || "TBD"
   const awayName = match?.awayTeam?.name || match?.placeholderAway || "TBD"
 

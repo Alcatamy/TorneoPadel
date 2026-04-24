@@ -1,4 +1,4 @@
-import { Info as InfoIcon, CheckCircle2, AlertTriangle, Gift } from "lucide-react"
+import { CheckCircle2, AlertTriangle, Gift } from "lucide-react"
 
 export default function InfoPage() {
   return (
