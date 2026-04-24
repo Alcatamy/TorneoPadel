@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   // "Caballeros" or "Damas"
+  format    String   // "Groups" or "League"
+  groups    Group[]
+  teams     Team[]
+}
+
+model Group {
+  id         String   @id @default(cuid())
+  name       String   // "Grupo A", "Grupo B"
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  teams      Team[]
+}
+
+model Team {
+  id         String   @id @default(cuid())
+  name       String   // "Kiko y Adrián"
+  players    String   // Comma separated or simple string
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  groupId    String?
+  group      Group?   @relation(fields: [groupId], references: [id])
+
+  // Stats
+  matchesPlayed Int @default(0)
+  matchesWon    Int @default(0)
+  matchesLost   Int @default(0)
+  gamesWon      Int @default(0)
+  gamesLost     Int @default(0)
+  points        Int @default(0) // 3 for win, 1 for draw, 0 for loss (or simply derived)
+
+  // Relations to Matches
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  time        String   // e.g. "10:00"
+  court       String   // "Pista 1" or "Pista 2"
+  homeTeamId  String?
+  homeTeam    Team?    @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeamId  String?
+  awayTeam    Team?    @relation("AwayTeam", fields: [awayTeamId], references: [id])
+
+  // For knockout stages or placeholders
+  placeholderHome String?
+  placeholderAway String?
+
+  type        String   // "Group", "League", "Semifinal", "Final", "3rd/4th", "Semi Consolación", etc.
+
+  // Results
+  isPlayed    Boolean  @default(false)
+  homeScore   Int?
+  awayScore   Int?
+}
