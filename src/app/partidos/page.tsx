@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { Calendar as CalendarIcon, MapPin, Clock } from "lucide-react"
+import { MapPin, Clock } from "lucide-react"
 
 export default async function PartidosPage() {
   const allMatches = await prisma.match.findMany({

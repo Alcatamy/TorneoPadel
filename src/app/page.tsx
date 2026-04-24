@@ -40,7 +40,7 @@ export default async function Home() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none" />
         <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-2">Torneo en Curso</h2>
         <h1 className="text-3xl font-bold text-white leading-tight mb-4 text-balance">
-          I Torneo Premier Padel "Bajá las Patas"
+          I Torneo Premier Padel &quot;Bajá las Patas&quot;
         </h1>
         <p className="text-textMuted text-sm max-w-[80%] mb-6">
           Sigue los resultados, estadísticas y próximos encuentros en tiempo real.
@@ -119,7 +119,19 @@ export default async function Home() {
   )
 }
 
-function StandingsTable({ teams }: { teams: any[] }) {
+type TeamStanding = {
+  id: string;
+  name: string;
+  points: number;
+  matchesPlayed: number;
+  matchesWon: number;
+  matchesLost: number;
+  gamesWon: number;
+  gamesLost: number;
+  [key: string]: unknown;
+};
+
+function StandingsTable({ teams }: { teams: TeamStanding[] }) {
   return (
     <div className="w-full">
       <div className="grid grid-cols-12 text-xs text-textMuted px-4 py-2 border-b border-border/50">

@@ -59,7 +59,14 @@ export default async function EquiposPage() {
   )
 }
 
-function TeamCard({ team }: { team: any }) {
+type TeamData = {
+  id: string;
+  name: string;
+  players: string;
+  [key: string]: unknown;
+};
+
+function TeamCard({ team }: { team: TeamData }) {
   return (
     <Link
       href={`/equipos/${team.id}`}
