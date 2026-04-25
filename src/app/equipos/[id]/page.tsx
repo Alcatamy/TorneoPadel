@@ -3,9 +3,11 @@ import { notFound } from "next/navigation"
 import { Users, Trophy, Target, Activity, Calendar as CalendarIcon, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
-export default async function TeamPage({ params }: { params: { id: string } }) {
+export default async function TeamPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   const team = await prisma.team.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       category: true,
       group: true,
